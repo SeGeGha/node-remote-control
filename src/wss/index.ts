@@ -1,6 +1,6 @@
 import { WebSocketServer } from 'ws';
 
-import { commandHandler } from './commandHandler';
+import { commandHandler } from './commands';
 
 import { PORTS } from '../constants';
 
