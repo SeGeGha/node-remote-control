@@ -1,5 +1,5 @@
 import { WebSocketServer } from 'ws';
-import { mouse, up, down, left, right } from '@nut-tree/nut-js';
+import { Region, mouse, up, down, left, right } from '@nut-tree/nut-js';
 
 import { httpServer } from './src/http_server/index.js';
 
@@ -28,13 +28,14 @@ const commandHandler = async (command, params) => {
 
             return `${point.x},${point.y}`;
         }
+        case 'draw_circle': {
+            break;
+        }
+
         case 'draw_square': {
             break;
         }
         case 'draw_rectangle': {
-            break;
-        }
-        case 'draw_circle': {
             break;
         }
         case 'prnt_scrn': {
@@ -52,12 +53,13 @@ wss.on('listening', () => {
     console.log(`WebSocket server `)
 });
 
-wss.on('connection', ws => {
-    console.log(`WebSocket`)
+wss.on('connection', (ws, req) => {
+    console.log(`WebSocket`, ws.address, req.client.address())
 
-    ws.on('message', async (data) => {
+    ws.on('message', async (data, w, s) => {
         const [ command, params ] = data.toString().split(' ');
         console.log(`Received command from client: command - ${command}, params - ${params}`);
+        console.log(w, s)
 
         try {
             const result = await commandHandler(command, params);
