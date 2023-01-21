@@ -1,3 +1,4 @@
+import { printScreen } from './screen';
 import { move, getPosition } from './mouse';
 import { drawRectangle, drawCircle } from './draw';
 
@@ -34,7 +35,11 @@ export const commandHandler = async (command: string, params: string) => {
 
             return `${command} ${result}`;
         }
-        case COMMANDS.PRNT_SCRN: return () => {};
+        case COMMANDS.PRNT_SCRN: {
+            const buffer = await printScreen();
+
+            return `${command} ${buffer.toString('base64')}`
+        }
         default: {
             break;
         }
