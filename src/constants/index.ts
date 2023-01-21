@@ -11,10 +11,12 @@ export enum COMMANDS {
 }
 
 export enum PORTS {
-    HTTP = 8181,
+    HTTP       = 8181,
     WEB_SOCKET = 8080,
 }
 
 export const SCREENSHOT_SIZE = 200;
 
+export const RESULT_MESSAGE  = 'Result';
 export const SUCCESS_MESSAGE = 'completed successfully';
+export const FAILURE_MESSAGE = 'command ended with error';

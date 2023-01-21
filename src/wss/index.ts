@@ -2,6 +2,8 @@ import { WebSocketServer } from 'ws';
 
 import { commandHandler } from './commands';
 
+import { FAILURE_MESSAGE, RESULT_MESSAGE } from "../constants";
+
 export const startWebSocketServer = (port: number) => {
     const wss = new WebSocketServer({ port });
 
@@ -18,11 +20,11 @@ export const startWebSocketServer = (port: number) => {
 
             try {
                 const result = await commandHandler(command, params.join(' '));
-                console.log(`Result: ${result}`);
+                console.log(`${RESULT_MESSAGE}: ${result}`);
 
-                if (result) ws.send(result);
+                ws.send(result);
             } catch(error) {
-                console.log(`Command ended with an error: ${error.message}`);
+                console.log(`${command} ${FAILURE_MESSAGE}: ${error.message}`);
             }
         });
     });

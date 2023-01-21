@@ -23,16 +23,20 @@ export const drawCircle = async (radius: number) => {
     const currentPosition = await mouse.getPosition();
     const centerPosition = new Point(currentPosition.x + radius, currentPosition.y);
 
-    await mouse.pressButton(Button.LEFT);
+    try {
+        await mouse.pressButton(Button.LEFT);
 
-    for (let i = 0; i <= 2 * Math.PI; i += 0.05) {
-        const x = centerPosition.x - radius * Math.cos(i);
-        const y = centerPosition.y - radius * Math.sin(i);
+        for (let i = 0; i <= 2 * Math.PI; i += 0.05) {
+            const x = centerPosition.x - radius * Math.cos(i);
+            const y = centerPosition.y - radius * Math.sin(i);
 
-        await mouse.move(straightTo(new Point(x, y)));
+            await mouse.move(straightTo(new Point(x, y)));
+        }
+    } catch (error) {
+        throw new Error(error.message);
+    } finally {
+        await mouse.releaseButton(Button.LEFT);
     }
-
-    await mouse.releaseButton(Button.LEFT);
 
     return SUCCESS_MESSAGE;
 };
