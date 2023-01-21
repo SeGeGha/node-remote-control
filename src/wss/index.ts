@@ -2,19 +2,19 @@ import { WebSocketServer } from 'ws';
 
 import { commandHandler } from './commands';
 
-import { FAILURE_MESSAGE, RESULT_MESSAGE } from "../constants";
+import { FAILURE_MESSAGE, RESULT_MESSAGE } from '../constants';
 
 export const startWebSocketServer = (port: number) => {
+    console.log(`Start webSocket server on the ${port} port!`);
+
     const wss = new WebSocketServer({ port });
 
-    wss.on('listening', () => {
-        console.log(`WebSocket server `)
-    });
-
     wss.on('connection', (ws, req) => {
-        console.log(`WebSocket`)
+        const ip = req.socket.remoteAddress;
 
-        ws.on('message', async (data) => {
+        console.log(`Connected new user with ${ip} ip. Total clients count: ${wss.clients.size}`);
+
+        ws.on('message', async data => {
             const [ command, ...params ] = data.toString().split(' ');
             console.log(`Received ${command} command from client with '${params}' params`);
 
@@ -27,14 +27,18 @@ export const startWebSocketServer = (port: number) => {
                 console.log(`${command} ${FAILURE_MESSAGE}: ${error.message}`);
             }
         });
+
+        ws.on('close', () => {
+            console.log(`Client ${ip} disconnected. Total clients count: ${wss.clients.size}`)
+        });
     });
 
+    process.on('SIGINT', () => {
+        console.log('Close webSocket server with all clients connection');
 
-    wss.on('close', () => {
-        console.log('close')
-    });
+        wss.clients.forEach(client => client.close());
 
-    wss.on('error', () => {
-        console.log('error')
+        wss.close(() => process.exit());
     });
 };
+
