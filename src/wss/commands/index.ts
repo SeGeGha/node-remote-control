@@ -1,7 +1,7 @@
 import { move, getPosition } from './mouse';
 import { drawRectangle, drawCircle } from './draw';
 
-import { COMMANDS } from '../../constants';
+import { COMMANDS, SUCCESS_MESSAGE } from '../../constants';
 
 export const commandHandler = async (command: string, params: string) => {
     switch (command) {
@@ -14,7 +14,7 @@ export const commandHandler = async (command: string, params: string) => {
 
             await move(direction, offset);
 
-            return;
+            return `${command} ${SUCCESS_MESSAGE}`;
         }
         case COMMANDS.MOUSE_POSITION: {
             const point = await getPosition();
@@ -24,13 +24,15 @@ export const commandHandler = async (command: string, params: string) => {
         case COMMANDS.DRAW_RECTANGLE:
         case COMMANDS.DRAW_SQUARE: {
             const [ width, length = width ]: number[] = params.split(' ').map(param => parseInt(param, 10));
+            const result = await drawRectangle(width, length);
 
-            return await drawRectangle(width, length);
+            return `${command} ${result}`;
         }
         case COMMANDS.DRAW_CIRCLE: {
             const radius = parseInt(params, 10);
+            const result = await drawCircle(radius);
 
-            return await drawCircle(radius);
+            return `${command} ${result}`;
         }
         case COMMANDS.PRNT_SCRN: return () => {};
         default: {

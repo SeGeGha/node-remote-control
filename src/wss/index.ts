@@ -2,10 +2,8 @@ import { WebSocketServer } from 'ws';
 
 import { commandHandler } from './commands';
 
-import { PORTS } from '../constants';
-
 export const startWebSocketServer = (port: number) => {
-    const wss = new WebSocketServer({ port: PORTS.WEB_SOCKET });
+    const wss = new WebSocketServer({ port });
 
     wss.on('listening', () => {
         console.log(`WebSocket server `)
@@ -16,15 +14,15 @@ export const startWebSocketServer = (port: number) => {
 
         ws.on('message', async (data) => {
             const [ command, ...params ] = data.toString().split(' ');
-            console.log(`Received command from client: command - ${command}, params - ${params}`);
+            console.log(`Received ${command} command from client with '${params}' params`);
 
             try {
                 const result = await commandHandler(command, params.join(' '));
-                console.log(result)
+                console.log(`Result: ${result}`);
 
                 if (result) ws.send(result);
             } catch(error) {
-                console.log(error.message);
+                console.log(`Command ended with an error: ${error.message}`);
             }
         });
     });

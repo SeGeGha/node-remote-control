@@ -1,5 +1,7 @@
 import { Button, down, left, mouse, Point, right, straightTo, up } from '@nut-tree/nut-js';
 
+import { SUCCESS_MESSAGE } from '../../constants';
+
 export const drawRectangle = async (width: number, length: number) => {
     const moveOrders = [
         () => right(width),
@@ -13,6 +15,8 @@ export const drawRectangle = async (width: number, length: number) => {
 
         await mouse.drag(moveTo());
     }
+
+    return SUCCESS_MESSAGE;
 };
 
 export const drawCircle = async (radius: number) => {
@@ -29,4 +33,6 @@ export const drawCircle = async (radius: number) => {
     }
 
     await mouse.releaseButton(Button.LEFT);
+
+    return SUCCESS_MESSAGE;
 };

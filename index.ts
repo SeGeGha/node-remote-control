@@ -1,5 +1,5 @@
-import { startHttpServer } from './src/httpServer/index';
-import { startWebSocketServer } from './src/wss/index';
+import { startHttpServer } from './src/httpServer';
+import { startWebSocketServer } from './src/wss';
 
 import { PORTS } from './src/constants';
 

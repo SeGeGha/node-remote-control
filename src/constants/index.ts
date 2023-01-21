@@ -14,3 +14,7 @@ export enum PORTS {
     HTTP = 8181,
     WEB_SOCKET = 8080,
 }
+
+export const SCREENSHOT_SIZE = 200;
+
+export const SUCCESS_MESSAGE = 'completed successfully';
