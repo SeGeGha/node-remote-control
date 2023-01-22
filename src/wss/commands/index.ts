@@ -2,7 +2,7 @@ import { printScreen } from './screen';
 import { move, getPosition } from './mouse';
 import { drawRectangle, drawCircle } from './draw';
 
-import { COMMANDS, SUCCESS_MESSAGE } from '../../constants';
+import { COMMANDS, SUCCESS_MESSAGE, UNKNOWN_COMMAND_MESSAGE } from '../../constants';
 
 export const commandHandler = async (command: string, params: string) => {
     switch (command) {
@@ -41,7 +41,7 @@ export const commandHandler = async (command: string, params: string) => {
             return `${command} ${buffer.toString('base64')}`
         }
         default: {
-            break;
+            return `${command} - ${UNKNOWN_COMMAND_MESSAGE}`;
         }
     }
 };
