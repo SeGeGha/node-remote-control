@@ -17,6 +17,7 @@ export enum PORTS {
 
 export const SCREENSHOT_SIZE = 200;
 
-export const RESULT_MESSAGE  = 'Result';
-export const SUCCESS_MESSAGE = 'completed successfully';
-export const FAILURE_MESSAGE = 'command ended with error';
+export const RESULT_MESSAGE    = 'Result';
+export const SUCCESS_MESSAGE   = 'completed successfully';
+export const FAILURE_MESSAGE   = 'command ended with error';
+export const APP_ERROR_MESSAGE = 'Application error';
