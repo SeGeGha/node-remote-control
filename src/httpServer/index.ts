@@ -24,4 +24,6 @@ export const startHttpServer = (port: number) => {
     console.log(`Start static http server on the ${port} port!`);
 
     httpServer.listen(port);
+
+    return httpServer;
 };

@@ -45,12 +45,6 @@ export const startWebSocketServer = (port: number) => {
 
     wss.on('error', error => console.log(`${APP_ERROR_MESSAGE}: ${error.message}`));
 
-    process.on('SIGINT', () => {
-        console.log('Close webSocket server with all clients connection');
-
-        wss.clients.forEach(client => client.close());
-
-        wss.close(() => process.exit());
-    });
+    return wss;
 };
 
